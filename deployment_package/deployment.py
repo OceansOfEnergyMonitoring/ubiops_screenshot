@@ -51,7 +51,7 @@ class Deployment:
         #     "output": data['input'] * random.random()
         # }
         
-        driver = webdriver.Chrome(ChromeDriverManager().install())
+        driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
 
         driver.get('https://waterberichtgeving.rws.nl/wbviewer/maak_grafiek.php?loc=EPL&set=wigo&nummer=4')
 
