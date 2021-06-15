@@ -1,3 +1,4 @@
 apt:
   packages:
-    - chromium-browser
+    - firefox
+    - firefox-geckodriver

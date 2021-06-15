@@ -3,10 +3,12 @@ The file containing the deployment code is required to be called 'deployment.py'
 class and 'request' method.
 """
 
+import random
 from selenium import webdriver
-from datetime import datetime as dt 
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver import ActionChains
-from webdriver_manager.chrome import ChromeDriverManager
+from datetime import datetime as dt 
+
 
 class Deployment:
 
@@ -26,7 +28,12 @@ class Deployment:
                 - environment_variables (str): the custom environment variables configured for the deployment.
                     You can also access those as normal environment variables via os.environ
         """
-
+        options = Options()
+        options.headless = True
+        driver = webdriver.Firefox(options=options)
+        driver.get("http://google.com/")
+        print ("Headless Firefox Initialized")
+        driver.quit()
         print("Initialising My Deployment")
 
     def request(self, data):
@@ -44,15 +51,11 @@ class Deployment:
         print("Processing request for My Deployment")
 
         # You can run any code to handle the request here.
-
-        # For a structured deployment, we return a Python dict with output. In this example, we are assuming this
-        # deployment receives one input field called 'input' and outputs one field called 'output'
-        # return {
-        #     "output": data['input'] * random.random()
-        # }
-        
-        driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
-
+        options = Options()
+        options.headless = True
+        driver = webdriver.Firefox(options=options)
+        driver.get("http://www.python.org")
+        assert "Python" in driver.title
         driver.get('https://waterberichtgeving.rws.nl/wbviewer/maak_grafiek.php?loc=EPL&set=wigo&nummer=4')
 
         xpath='/html/body/form/table/tbody/tr/td[1]/div/div[1]' # xpath of graph
@@ -62,4 +65,9 @@ class Deployment:
         action.double_click(graph).perform() # double click graph
         filename='Hs Europlatform {}.png'.format(dt.now().strftime('%Y-%m-%d %H')) # define filename incl date
         screenshot = driver.save_screenshot(filename) # save screenshot
+
         driver.quit()
+        
+        return {
+            "screenshot": filename
+            }

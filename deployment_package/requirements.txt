@@ -1,3 +1,6 @@
-selenium==3.141.0
-datetime==4.3 
-webdriver_manager==3.4.2
+# This file can contain package requirements for the deployment to be installed via Python pip. Packages defined here
+# will be installed with your deployment automatically.
+#
+# Example:
+# requests==2.24.0
+selenium
